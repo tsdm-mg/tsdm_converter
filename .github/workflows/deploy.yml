@@ -23,6 +23,9 @@ jobs:
   build:
     name: Deploy
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -40,11 +43,12 @@ jobs:
           flutter test
       - name: Build web
         run: |
-          flutter build web --release
+          flutter build web flutter build web --base-href /${{ github.event.repository.name }}/ --release
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           name: 'github-pages'
-          path: 'build/web'
-      - name: Deploy
+          path: build/web/
+      - name: Deploy to GH pages
+        id: deployment
         uses: actions/deploy-pages@v4
