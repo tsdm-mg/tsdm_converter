@@ -19,7 +19,7 @@ env:
 
 jobs:
   build:
-    name: Build
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -40,11 +40,8 @@ jobs:
         run: |
           flutter build web --release
       - name: Upload artifact
-        uses: actions/upload-artifact@4
+        uses: actions/upload-artifact@v4
         with:
-          name: build
-          path: build/web
+          path: 'build/web'
       - name: Deploy
         uses: actions/deploy-pages@v4
-        with:
-          artifact_name: "build"
