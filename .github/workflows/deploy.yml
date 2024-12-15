@@ -1,0 +1,50 @@
+name: Deploy GH pages
+
+on:
+  push:
+    branches: [ 'deploy' ]
+  pull_request:
+    branches: [ 'deploy' ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+env:
+  CI_FLUTTER_VERSION: '3.27.x'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{env.CI_FLUTTER_VERSION}}
+          cache: true
+      - name: Precompile
+        run: |
+          flutter pub get
+      - name: Run flutter analyze
+        run: |
+          flutter analyze --fatal-infos --fatal-warnings lib
+      - name: Run flutter test
+        run: |
+          flutter test
+      - name: Build web
+        run: |
+          flutter build web --release
+      - name: Upload artifact
+        uses: actions/upload-artifact@4
+        with:
+          name: build
+          path: build/web
+      - name: Deploy
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: "build"
