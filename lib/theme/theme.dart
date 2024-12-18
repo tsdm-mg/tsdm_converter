@@ -1,5 +1,6 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// The [AppTheme] defines light and dark themes for the app.
@@ -18,20 +19,28 @@ import 'package:flutter/material.dart';
 ///  :
 /// );
 sealed class AppTheme {
+  static final String? _fontFamily =
+      defaultTargetPlatform == TargetPlatform.windows
+          ? 'Microsoft YaHei UI'
+          : null;
+
+  static const FlexSubThemesData _subThemesData = FlexSubThemesData(
+    inputDecoratorBorderType: FlexInputBorderType.outline,
+    alignedDropdown: true,
+    tooltipRadius: 4,
+    tooltipSchemeColor: SchemeColor.inverseSurface,
+    tooltipOpacity: 0.9,
+    snackBarElevation: 6,
+    snackBarBackgroundSchemeColor: SchemeColor.inverseSurface,
+    navigationRailUseIndicator: true,
+    navigationRailLabelType: NavigationRailLabelType.all,
+  );
+
   /// The defined light theme.
   static ThemeData light = FlexThemeData.light(
+    fontFamily: _fontFamily,
     scheme: FlexScheme.outerSpace,
-    subThemesData: const FlexSubThemesData(
-      inputDecoratorBorderType: FlexInputBorderType.outline,
-      alignedDropdown: true,
-      tooltipRadius: 4,
-      tooltipSchemeColor: SchemeColor.inverseSurface,
-      tooltipOpacity: 0.9,
-      snackBarElevation: 6,
-      snackBarBackgroundSchemeColor: SchemeColor.inverseSurface,
-      navigationRailUseIndicator: true,
-      navigationRailLabelType: NavigationRailLabelType.all,
-    ),
+    subThemesData: _subThemesData,
     keyColors: const FlexKeyColors(),
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
@@ -39,19 +48,9 @@ sealed class AppTheme {
 
   /// The defined dark theme.
   static ThemeData dark = FlexThemeData.dark(
+    fontFamily: _fontFamily,
     scheme: FlexScheme.outerSpace,
-    subThemesData: const FlexSubThemesData(
-      blendOnColors: true,
-      inputDecoratorBorderType: FlexInputBorderType.outline,
-      alignedDropdown: true,
-      tooltipRadius: 4,
-      tooltipSchemeColor: SchemeColor.inverseSurface,
-      tooltipOpacity: 0.9,
-      snackBarElevation: 6,
-      snackBarBackgroundSchemeColor: SchemeColor.inverseSurface,
-      navigationRailUseIndicator: true,
-      navigationRailLabelType: NavigationRailLabelType.all,
-    ),
+    subThemesData: _subThemesData,
     keyColors: const FlexKeyColors(),
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     cupertinoOverrideTheme: const CupertinoThemeData(applyThemeToAll: true),
