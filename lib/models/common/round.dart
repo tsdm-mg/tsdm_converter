@@ -1,3 +1,5 @@
+part of 'models.dart';
+
 /// 萌战轮次
 enum Round {
   /// 初赛

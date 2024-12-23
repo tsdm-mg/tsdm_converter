@@ -1,3 +1,5 @@
+part of 'models.dart';
+
 /// 萌战阶段
 enum Stage {
   /// 冬季篇

@@ -1,10 +1,10 @@
-import 'package:tsdm_converter/models/common/poll_result.dart';
+import 'package:tsdm_converter/models/common/models.dart';
 
 /// Collect bangumi poll result info from a set of characters poll result
 /// [poll].
 Set<BangumiPollResult> collectBangumiInfo(Set<CharacterPollResult> poll) => poll
     .fold(<String, Set<CharacterPollResult>>{}, (acc, e) {
-      final key = e.character.bangumi;
+      final key = e.bangumi;
       if (acc.containsKey(key)) {
         acc[key]!.add(e);
       } else {

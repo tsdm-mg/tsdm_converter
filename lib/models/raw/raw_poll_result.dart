@@ -7,7 +7,7 @@ import 'package:tsdm_converter/constants/tags.dart';
 final class RawPollResult extends Equatable {
   /// Constructor.
   const RawPollResult({
-    required this.character,
+    required this.name,
     required this.bangumi,
     required this.all,
     required this.effective,
@@ -36,7 +36,7 @@ final class RawPollResult extends Equatable {
     final ranking = int.parse(match.namedGroup('ranking')!);
 
     return RawPollResult(
-      character: character,
+      name: character,
       bangumi: bangumi,
       all: all,
       effective: effective,
@@ -45,7 +45,7 @@ final class RawPollResult extends Equatable {
   }
 
   /// Character name with bangumi name.
-  final String character;
+  final String name;
 
   /// Bangumi name.
   final String bangumi;
@@ -60,5 +60,5 @@ final class RawPollResult extends Equatable {
   final int ranking;
 
   @override
-  List<Object?> get props => [character, bangumi];
+  List<Object?> get props => [name, bangumi];
 }

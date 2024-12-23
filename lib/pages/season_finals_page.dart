@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tsdm_converter/constants/constants.dart';
-import 'package:tsdm_converter/models/common/poll_result.dart';
-import 'package:tsdm_converter/models/common/stage.dart';
+import 'package:tsdm_converter/models/common/models.dart';
 import 'package:tsdm_converter/models/raw/raw_poll_result.dart';
 import 'package:tsdm_converter/models/report/season_finals_report.dart';
 import 'package:tsdm_converter/utils/copy_clipboard.dart';

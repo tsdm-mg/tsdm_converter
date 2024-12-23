@@ -1,12 +1,11 @@
-import 'package:collection/collection.dart';
-import 'package:tsdm_converter/models/common/character.dart';
-import 'package:tsdm_converter/models/raw/raw_poll_result.dart';
+part of 'models.dart';
 
-/// Poll result for a given [character].
+/// Poll result for a given [name].
 final class CharacterPollResult {
   /// Constructor.
   const CharacterPollResult({
-    required this.character,
+    required this.name,
+    required this.bangumi,
     required this.all,
     required this.effective,
     required this.ranking,
@@ -14,17 +13,18 @@ final class CharacterPollResult {
 
   /// Construct from a raw poll result.
   factory CharacterPollResult.fromRaw(RawPollResult raw) => CharacterPollResult(
-        character: Character(
-          name: raw.character,
-          bangumi: raw.bangumi,
-        ),
+        name: raw.name,
+        bangumi: raw.bangumi,
         all: raw.all,
         effective: raw.effective,
         ranking: raw.ranking,
       );
 
   /// Character vote for.
-  final Character character;
+  final String name;
+
+  /// Bangumi came from.
+  final String bangumi;
 
   /// All counts.
   final int all;
@@ -37,7 +37,7 @@ final class CharacterPollResult {
 
   /// Convert to bbcode.
   String toBBCode() =>
-      '[td]$ranking[/td][td]$character[/td][td]$all[/td][td]$effective[/td][/tr]';
+      '[td]$ranking[/td][td]$name@$bangumi[/td][td]$all[/td][td]$effective[/td][/tr]';
 }
 
 /// Poll result on a bangumi.
@@ -59,8 +59,16 @@ final class BangumiPollResult {
     );
 
     return BangumiPollResult(
-      name: characters.first.character.bangumi,
-      characters: characters.map((e) => e.character).toSet(),
+      name: characters.first.bangumi,
+      characters: characters
+          .map(
+            (e) => Character(
+              name: e.name,
+              bangumi: e.bangumi,
+              promoteStatus: PromoteStatus.empty(),
+            ),
+          )
+          .toSet(),
     );
   }
 

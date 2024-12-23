@@ -1,3 +1,7 @@
+lib/**/*.g.dart
+lib/**/*.mapper.dart
+lib/**/*.freezed.dart
+
 # Miscellaneous
 *.class
 *.log

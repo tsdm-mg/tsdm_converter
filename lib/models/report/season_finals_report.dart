@@ -1,5 +1,4 @@
-import 'package:tsdm_converter/models/common/poll_result.dart';
-import 'package:tsdm_converter/models/common/stage.dart';
+import 'package:tsdm_converter/models/common/models.dart';
 import 'package:tsdm_converter/models/report/base.dart';
 import 'package:tsdm_converter/utils/collect.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tsdm_converter/models/pages/season_finals_page.dart';
+import 'package:tsdm_converter/pages/season_finals_page.dart';
 import 'package:tsdm_converter/theme/theme.dart';
 
 void main() {
