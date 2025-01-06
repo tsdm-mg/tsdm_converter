@@ -59,6 +59,7 @@ class _FinalsPageState extends State<FinalsPage> {
           ),
           Expanded(
             child: Column(
+              spacing: 4,
               children: [
                 Expanded(
                   child: PageView(
@@ -70,8 +71,20 @@ class _FinalsPageState extends State<FinalsPage> {
                     ],
                   ),
                 ),
+                Row(
+                  children: [
+                    const Spacer(),
+                    ElevatedButton(
+                      onPressed: () {
+                        throw UnimplementedError();
+                      },
+                      child: const Text('下一步'),
+                    ),
+                  ],
+                ),
                 LinearProgressIndicator(
                   value: _process,
+                  minHeight: 8,
                 ),
               ],
             ),
