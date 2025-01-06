@@ -33,7 +33,7 @@ final class Character extends Equatable with CharacterMappable {
   final PromoteStatus promoteStatus;
 
   @override
-  String toString() => '$name@$bangumi';
+  String toString() => '$name@$bangumi ($promoteStatus)';
 
   @override
   List<Object?> get props => [name, bangumi];

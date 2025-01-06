@@ -196,7 +196,10 @@ class _SeasonFinalsPageState extends State<SeasonFinalsPage> {
                   Flexible(
                     child: TextField(
                       controller: _finalsController,
-                      decoration: const InputDecoration(labelText: '决赛投票结果'),
+                      decoration: const InputDecoration(
+                        labelText: '决赛投票结果',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
                       maxLines: null,
                       minLines: 7,
                     ),
@@ -205,7 +208,10 @@ class _SeasonFinalsPageState extends State<SeasonFinalsPage> {
                   Flexible(
                     child: TextField(
                       controller: _repechageController,
-                      decoration: const InputDecoration(labelText: '复活赛投票结果'),
+                      decoration: const InputDecoration(
+                        labelText: '复活赛投票结果',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
                       maxLines: null,
                       minLines: 7,
                     ),

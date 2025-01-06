@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tsdm_converter/pages/season_finals_page.dart';
+import 'package:tsdm_converter/pages/home_page.dart';
 import 'package:tsdm_converter/theme/theme.dart';
 
 void main() {
@@ -38,21 +38,22 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('TSDM Converter'),
-          bottom: TabBar(
-            controller: _tabController,
-            tabAlignment: TabAlignment.start,
-            isScrollable: true,
-            tabs: const [
-              Tab(text: '季节篇决赛'),
-            ],
-          ),
+          // bottom: TabBar(
+          //   controller: _tabController,
+          //   tabAlignment: TabAlignment.start,
+          //   isScrollable: true,
+          //   tabs: const [
+          //     Tab(text: '季节篇决赛'),
+          //   ],
+          // ),
         ),
-        body: TabBarView(
-          controller: _tabController,
-          children: const [
-            SeasonFinalsPage(),
-          ],
-        ),
+        // body: TabBarView(
+        //   controller: _tabController,
+        //   children: const [
+        //     SeasonFinalsPage(),
+        //   ],
+        // ),
+        body: const HomePage(),
       ),
     );
   }
