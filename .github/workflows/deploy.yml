@@ -35,6 +35,7 @@ jobs:
       - name: Precompile
         run: |
           flutter pub get
+          dart run build_runner build -d
       - name: Run flutter analyze
         run: |
           flutter analyze --fatal-infos --fatal-warnings lib
