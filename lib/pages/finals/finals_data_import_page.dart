@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tsdm_converter/models/common/models.dart';
+import 'package:tsdm_converter/models/stages/ending/preliminary/models.dart';
 
 /// 用于导入初始数据的页面
 ///
@@ -9,7 +10,10 @@ import 'package:tsdm_converter/models/common/models.dart';
 /// * 导入初赛分组
 class FinalsDataImportPage extends StatefulWidget {
   /// Constructor.
-  const FinalsDataImportPage({super.key});
+  const FinalsDataImportPage({required this.onImported, super.key});
+
+  /// Callback when date imported.
+  final void Function(EndingPreliminaryGroups groups) onImported;
 
   @override
   State<FinalsDataImportPage> createState() => _FinalsDataImportPageState();
@@ -18,6 +22,8 @@ class FinalsDataImportPage extends StatefulWidget {
 class _FinalsDataImportPageState extends State<FinalsDataImportPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
+  var _characters = EndingPreliminaryGroups.empty;
 
   @override
   void initState() {
@@ -47,11 +53,42 @@ class _FinalsDataImportPageState extends State<FinalsDataImportPage>
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: const [
-              _PreliminaryGroup(key: ValueKey('groupA')),
-              _PreliminaryGroup(key: ValueKey('groupB')),
-              _PreliminaryGroup(key: ValueKey('groupC')),
-              _PreliminaryGroup(key: ValueKey('groupD')),
+            children: [
+              // A组
+              _PreliminaryGroup(
+                onSaved: (characters) => setState(() {
+                  _characters = _characters.copyWith(groupA: characters);
+                  widget.onImported(_characters);
+                }),
+                key: const ValueKey('groupA'),
+              ),
+
+              // B组
+              _PreliminaryGroup(
+                onSaved: (characters) => setState(() {
+                  _characters = _characters.copyWith(groupB: characters);
+                  widget.onImported(_characters);
+                }),
+                key: const ValueKey('groupB'),
+              ),
+
+              // C组
+              _PreliminaryGroup(
+                onSaved: (characters) => setState(() {
+                  _characters = _characters.copyWith(groupC: characters);
+                  widget.onImported(_characters);
+                }),
+                key: const ValueKey('groupC'),
+              ),
+
+              // D组
+              _PreliminaryGroup(
+                onSaved: (characters) => setState(() {
+                  _characters = _characters.copyWith(groupD: characters);
+                  widget.onImported(_characters);
+                }),
+                key: const ValueKey('groupD'),
+              ),
             ],
           ),
         ),
@@ -62,7 +99,10 @@ class _FinalsDataImportPageState extends State<FinalsDataImportPage>
 
 /// 初赛的一个分组
 class _PreliminaryGroup extends StatefulWidget {
-  const _PreliminaryGroup({super.key});
+  const _PreliminaryGroup({required this.onSaved, super.key});
+
+  /// Callback when date imported.
+  final void Function(Set<Character> characters) onSaved;
 
   @override
   State<_PreliminaryGroup> createState() => _PreliminaryGroupState();
@@ -70,7 +110,8 @@ class _PreliminaryGroup extends StatefulWidget {
 
 class _PreliminaryGroupState extends State<_PreliminaryGroup>
     with AutomaticKeepAliveClientMixin {
-  final _formKey = GlobalKey<FormState>();
+  final _inputFormKey = GlobalKey<FormState>();
+  final _promoteFormKey = GlobalKey<FormState>();
   late TextEditingController _dataController;
 
   /// Map of {角色 : 作品}
@@ -113,7 +154,7 @@ class _PreliminaryGroupState extends State<_PreliminaryGroup>
           children: [
             Expanded(
               child: Form(
-                key: _formKey,
+                key: _inputFormKey,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: TextFormField(
@@ -144,51 +185,54 @@ class _PreliminaryGroupState extends State<_PreliminaryGroup>
                 ),
               ),
             ),
-            Column(
-              spacing: 12,
-              children: [
-                ElevatedButton(
-                  child: const Text('整理'),
-                  onPressed: () {
-                    if (!_formKey.currentState!.validate()) {
-                      return;
-                    }
+            ElevatedButton(
+              child: const Text('整理'),
+              onPressed: () {
+                debugPrint('checking input form');
+                if (!_inputFormKey.currentState!.validate()) {
+                  return;
+                }
+                _updateData(_dataController.text.trim());
+                debugPrint('passed input form check');
+                debugPrint('checking promotion form');
+                if (!_promoteFormKey.currentState!.validate()) {
+                  return;
+                }
+                debugPrint('passed promotion form check');
+                debugPrint('save all data');
 
-                    _updateData(_dataController.text.trim());
-                  },
-                ),
-                ElevatedButton(
-                  child: const Text('打印'),
-                  onPressed: () async => showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      title: const Text('Data'),
-                      content: SingleChildScrollView(
-                        child:
-                            Text(_data.map((e) => e.toString()).join('\n\n')),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                _promoteFormKey.currentState!.save();
+                // Convert to characters.
+                debugPrint('>>> data: $_data');
+                widget.onSaved(_data.toSet());
+              },
             ),
           ],
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: _data.length,
-            itemExtent: 80,
-            itemBuilder: (_, index) => _PreliminaryCharacterInfo(
-              character: _data[index].name,
-              bangumi: _data[index].bangumi,
-              onUpdate: (int seasonFinals, int seasonRepechage) {
-                _data[index] = _data[index].copyWith(
-                  promoteStatus: _data[index].promoteStatus.copyWith(
-                        seasonFinals: seasonFinals,
-                        seasonRepechage: seasonRepechage,
-                      ),
-                );
-              },
+          child: Form(
+            key: _promoteFormKey,
+            child: ListView.builder(
+              itemCount: _data.length,
+              itemExtent: 80,
+              itemBuilder: (_, index) => _PreliminaryCharacterInfo(
+                character: _data[index].name,
+                bangumi: _data[index].bangumi,
+                onFinalsUpdate: (int seasonFinals) {
+                  _data[index] = _data[index].copyWith(
+                    promoteStatus: _data[index]
+                        .promoteStatus
+                        .copyWith(seasonFinals: seasonFinals),
+                  );
+                },
+                onRepechageUpdate: (int seasonRepechage) {
+                  _data[index] = _data[index].copyWith(
+                    promoteStatus: _data[index]
+                        .promoteStatus
+                        .copyWith(seasonRepechage: seasonRepechage),
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -207,14 +251,16 @@ class _PreliminaryCharacterInfo extends StatefulWidget {
   _PreliminaryCharacterInfo({
     required this.character,
     required this.bangumi,
-    required this.onUpdate,
+    required this.onFinalsUpdate,
+    required this.onRepechageUpdate,
   }) : super(key: ValueKey('$character@$bangumi'));
 
   final String character;
 
   final String bangumi;
 
-  final void Function(int seasonFinals, int seasonRepechage) onUpdate;
+  final void Function(int seasonFinals) onFinalsUpdate;
+  final void Function(int seasonRepechage) onRepechageUpdate;
 
   @override
   State<_PreliminaryCharacterInfo> createState() =>
@@ -222,7 +268,7 @@ class _PreliminaryCharacterInfo extends StatefulWidget {
 }
 
 class _PreliminaryCharacterInfoState extends State<_PreliminaryCharacterInfo> {
-  final _formKey = GlobalKey<FormState>();
+  // final _formKey = GlobalKey<FormState>();
   late TextEditingController _finalsController;
   late TextEditingController _repechageController;
 
@@ -242,69 +288,57 @@ class _PreliminaryCharacterInfoState extends State<_PreliminaryCharacterInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Row(
-        spacing: 12,
-        children: [
-          Expanded(
-            child: ListTile(
-              title: Text(widget.character),
-              subtitle: Text(widget.bangumi),
-            ),
+    return Row(
+      spacing: 12,
+      children: [
+        Expanded(
+          child: ListTile(
+            title: Text(widget.character),
+            subtitle: Text(widget.bangumi),
           ),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 140),
-            child: TextFormField(
-              controller: _finalsController,
-              decoration: const InputDecoration(
-                labelText: '季节赛决赛票数',
-              ),
-              validator: (v) {
-                if (v == null) {
-                  return '无效的票数';
-                }
-                final vv = int.tryParse(v);
-                if (vv == null || vv < 0) {
-                  return '无效的票数';
-                }
-                return null;
-              },
+        ),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 140),
+          child: TextFormField(
+            controller: _finalsController,
+            decoration: const InputDecoration(
+              labelText: '季节赛决赛票数',
             ),
-          ),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 140),
-            child: TextFormField(
-              controller: _repechageController,
-              decoration: const InputDecoration(
-                labelText: '季节赛复活赛票数',
-              ),
-              validator: (v) {
-                if (v == null) {
-                  return '无效的票数';
-                }
-                final vv = int.tryParse(v);
-                if (vv == null || vv < 0) {
-                  return '无效的票数';
-                }
-                return null;
-              },
-            ),
-          ),
-          TextButton(
-            child: const Text('更新'),
-            onPressed: () {
-              if (!_formKey.currentState!.validate()) {
-                return;
+            validator: (v) {
+              if (v == null) {
+                return '无效的票数';
               }
-              widget.onUpdate(
-                int.parse(_finalsController.text),
-                int.parse(_repechageController.text),
-              );
+              final vv = int.tryParse(v);
+              if (vv == null || vv < 0) {
+                return '无效的票数';
+              }
+              return null;
             },
+            onSaved: (v) => widget.onFinalsUpdate(int.parse(v!)),
           ),
-        ],
-      ),
+        ),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 140),
+          child: TextFormField(
+            controller: _repechageController,
+            decoration: const InputDecoration(
+              labelText: '季节赛复活赛票数',
+            ),
+            validator: (v) {
+              if (v == null) {
+                return '无效的票数';
+              }
+              final vv = int.tryParse(v);
+              if (vv == null || vv < 0) {
+                return '无效的票数';
+              }
+              return null;
+            },
+            onSaved: (v) => widget.onRepechageUpdate(int.parse(v!)),
+          ),
+        ),
+        const SizedBox(width: 4),
+      ],
     );
   }
 }

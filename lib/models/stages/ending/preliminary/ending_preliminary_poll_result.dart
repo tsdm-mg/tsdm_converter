@@ -12,6 +12,14 @@ final class EndingPreliminaryPollResult
     required this.groupD,
   });
 
+  /// Build empty instance.
+  static const empty = EndingPreliminaryPollResult(
+    groupA: {},
+    groupB: {},
+    groupC: {},
+    groupD: {},
+  );
+
   /// Group A
   final Set<CharacterPollResult> groupA;
 

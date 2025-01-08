@@ -9,6 +9,12 @@ final class EndingPreliminaryInfo with EndingPreliminaryInfoMappable {
     required this.polls,
   });
 
+  /// Build empty instance.
+  static const empty = EndingPreliminaryInfo(
+    groups: EndingPreliminaryGroups.empty,
+    polls: EndingPreliminaryPollResult.empty,
+  );
+
   /// 初赛分组情况
   final EndingPreliminaryGroups groups;
 
