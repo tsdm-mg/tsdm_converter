@@ -13,6 +13,7 @@ dependencies:
   collection: any
   dart_mappable: ^4.3.0
   equatable: ^2.0.7
+  file_picker: ^8.1.7
   flex_color_scheme: ^8.1.0
   flutter:
     sdk: flutter

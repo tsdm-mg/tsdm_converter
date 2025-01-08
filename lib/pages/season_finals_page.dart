@@ -58,8 +58,8 @@ class _SeasonFinalsPageState extends State<SeasonFinalsPage> {
     final calculated = SeasonFinalsReport.build(
       _stage,
       repechagePromoteLimit,
-      finals.toSet(),
-      repechage.toSet(),
+      finals.toList(),
+      repechage.toList(),
     );
 
     setState(() {

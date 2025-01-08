@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:tsdm_converter/models/stages/ending/preliminary/models.dart';
 import 'package:tsdm_converter/pages/finals/finals_data_import_page.dart';
 import 'package:tsdm_converter/utils/copy_clipboard.dart';
+import 'package:tsdm_converter/utils/show_dialog.dart';
 
 /// 完结篇
 class FinalsPage extends StatefulWidget {
@@ -62,8 +65,33 @@ class _FinalsPageState extends State<FinalsPage> {
                 ElevatedButton.icon(
                   icon: const Icon(Icons.upload_outlined),
                   label: const Text('导入完整数据'),
-                  onPressed: () {
-                    throw UnimplementedError();
+                  onPressed: () async {
+                    final result = await FilePicker.platform.pickFiles();
+                    if (result == null) {
+                      return;
+                    }
+                    final f =
+                        await File(result.files.single.path!).readAsString();
+
+                    if (!context.mounted) {
+                      return;
+                    }
+
+                    try {
+                      final x = EndingPreliminaryInfoMapper.fromJson(f);
+                      setState(() {
+                        _info = x;
+                      });
+
+                      // Fine to catch all.
+                      // ignore: avoid_catches_without_on_clauses
+                    } catch (e) {
+                      await showMessageSingleButtonDialog(
+                        context: context,
+                        title: '导入失败',
+                        message: '$e',
+                      );
+                    }
                   },
                 ),
                 ElevatedButton(
@@ -90,6 +118,7 @@ class _FinalsPageState extends State<FinalsPage> {
                     controller: _pageController,
                     children: [
                       FinalsDataImportPage(
+                        initialValue: _info.groups,
                         onImported: (groups) => setState(
                           () => _info = _info.copyWith(groups: groups),
                         ),

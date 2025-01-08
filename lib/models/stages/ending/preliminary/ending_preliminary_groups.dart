@@ -28,21 +28,21 @@ final class EndingPreliminaryGroups with EndingPreliminaryGroupsMappable {
 
   /// Build empty instance.
   static const EndingPreliminaryGroups empty = EndingPreliminaryGroups(
-    groupA: {},
-    groupB: {},
-    groupC: {},
-    groupD: {},
+    groupA: [],
+    groupB: [],
+    groupC: [],
+    groupD: [],
   );
 
   /// A组
-  final Set<Character> groupA;
+  final List<Character> groupA;
 
   /// B组
-  final Set<Character> groupB;
+  final List<Character> groupB;
 
   /// C组
-  final Set<Character> groupC;
+  final List<Character> groupC;
 
   /// D组
-  final Set<Character> groupD;
+  final List<Character> groupD;
 }

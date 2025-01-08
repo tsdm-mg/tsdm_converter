@@ -1,7 +1,8 @@
 part of 'models.dart';
 
 /// Poll result for a given [name].
-final class CharacterPollResult {
+@MappableClass()
+final class CharacterPollResult with CharacterPollResultMappable {
   /// Constructor.
   const CharacterPollResult({
     required this.name,
@@ -52,7 +53,7 @@ final class BangumiPollResult {
   ///
   /// The caller MUST ensure all character in [characters] have the same
   /// bangumi name.
-  factory BangumiPollResult.fromSet(Set<CharacterPollResult> characters) {
+  factory BangumiPollResult.fromList(List<CharacterPollResult> characters) {
     assert(
       characters.isNotEmpty,
       'should NOT build a bangumi poll result from empty character groups',

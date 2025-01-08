@@ -23,10 +23,10 @@ final class SeasonFinalsReport implements BaseReport {
   factory SeasonFinalsReport.build(
     Stage stage,
     int promoteLimit,
-    Set<CharacterPollResult> finalsPoll,
-    Set<CharacterPollResult> repechagePoll,
+    List<CharacterPollResult> finalsPoll,
+    List<CharacterPollResult> repechagePoll,
   ) {
-    final repechagePromoted = repechagePoll.take(promoteLimit).toSet();
+    final repechagePromoted = repechagePoll.take(promoteLimit).toList();
     final finalsBangumiResult = collectBangumiInfo(finalsPoll);
     final repechageBangumiResult = collectBangumiInfo(repechagePromoted);
 
@@ -46,16 +46,16 @@ final class SeasonFinalsReport implements BaseReport {
   final Stage stage;
 
   /// 决赛 角色投票结果
-  final Set<CharacterPollResult> finalsCharacters;
+  final List<CharacterPollResult> finalsCharacters;
 
   /// 决赛 番剧晋级状况
-  final Set<BangumiPollResult> finalsBangumiResult;
+  final List<BangumiPollResult> finalsBangumiResult;
 
   /// 复活赛 角色投票结果
-  final Set<CharacterPollResult> repechageCharacters;
+  final List<CharacterPollResult> repechageCharacters;
 
   /// 复活赛 番剧晋级状况
-  final Set<BangumiPollResult> repechageBangumiResult;
+  final List<BangumiPollResult> repechageBangumiResult;
 
   /// 复活赛复活的角色数量
   ///

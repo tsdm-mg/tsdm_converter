@@ -14,21 +14,21 @@ final class EndingPreliminaryPollResult
 
   /// Build empty instance.
   static const empty = EndingPreliminaryPollResult(
-    groupA: {},
-    groupB: {},
-    groupC: {},
-    groupD: {},
+    groupA: [],
+    groupB: [],
+    groupC: [],
+    groupD: [],
   );
 
   /// Group A
-  final Set<CharacterPollResult> groupA;
+  final List<CharacterPollResult> groupA;
 
   /// Group B
-  final Set<CharacterPollResult> groupB;
+  final List<CharacterPollResult> groupB;
 
   /// Group C
-  final Set<CharacterPollResult> groupC;
+  final List<CharacterPollResult> groupC;
 
   /// Group D
-  final Set<CharacterPollResult> groupD;
+  final List<CharacterPollResult> groupD;
 }

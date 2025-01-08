@@ -10,10 +10,17 @@ import 'package:tsdm_converter/models/stages/ending/preliminary/models.dart';
 /// * 导入初赛分组
 class FinalsDataImportPage extends StatefulWidget {
   /// Constructor.
-  const FinalsDataImportPage({required this.onImported, super.key});
+  const FinalsDataImportPage({
+    required this.initialValue,
+    required this.onImported,
+    super.key,
+  });
 
   /// Callback when date imported.
   final void Function(EndingPreliminaryGroups groups) onImported;
+
+  /// Initial group info.
+  final EndingPreliminaryGroups initialValue;
 
   @override
   State<FinalsDataImportPage> createState() => _FinalsDataImportPageState();
@@ -23,12 +30,13 @@ class _FinalsDataImportPageState extends State<FinalsDataImportPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  var _characters = EndingPreliminaryGroups.empty;
+  late EndingPreliminaryGroups _characters; //= .empty;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
+    _characters = widget.initialValue;
   }
 
   @override
@@ -56,6 +64,7 @@ class _FinalsDataImportPageState extends State<FinalsDataImportPage>
             children: [
               // A组
               _PreliminaryGroup(
+                initialValue: _characters.groupA,
                 onSaved: (characters) => setState(() {
                   _characters = _characters.copyWith(groupA: characters);
                   widget.onImported(_characters);
@@ -65,6 +74,7 @@ class _FinalsDataImportPageState extends State<FinalsDataImportPage>
 
               // B组
               _PreliminaryGroup(
+                initialValue: _characters.groupB,
                 onSaved: (characters) => setState(() {
                   _characters = _characters.copyWith(groupB: characters);
                   widget.onImported(_characters);
@@ -74,6 +84,7 @@ class _FinalsDataImportPageState extends State<FinalsDataImportPage>
 
               // C组
               _PreliminaryGroup(
+                initialValue: _characters.groupC,
                 onSaved: (characters) => setState(() {
                   _characters = _characters.copyWith(groupC: characters);
                   widget.onImported(_characters);
@@ -83,6 +94,7 @@ class _FinalsDataImportPageState extends State<FinalsDataImportPage>
 
               // D组
               _PreliminaryGroup(
+                initialValue: _characters.groupD,
                 onSaved: (characters) => setState(() {
                   _characters = _characters.copyWith(groupD: characters);
                   widget.onImported(_characters);
@@ -99,10 +111,17 @@ class _FinalsDataImportPageState extends State<FinalsDataImportPage>
 
 /// 初赛的一个分组
 class _PreliminaryGroup extends StatefulWidget {
-  const _PreliminaryGroup({required this.onSaved, super.key});
+  const _PreliminaryGroup({
+    required this.initialValue,
+    required this.onSaved,
+    super.key,
+  });
 
   /// Callback when date imported.
-  final void Function(Set<Character> characters) onSaved;
+  final void Function(List<Character> characters) onSaved;
+
+  /// Initial characters in this group.
+  final List<Character> initialValue;
 
   @override
   State<_PreliminaryGroup> createState() => _PreliminaryGroupState();
@@ -115,7 +134,7 @@ class _PreliminaryGroupState extends State<_PreliminaryGroup>
   late TextEditingController _dataController;
 
   /// Map of {角色 : 作品}
-  var _data = <Character>[];
+  late List<Character> _data;
 
   void _updateData(String rawData) {
     setState(() {
@@ -134,6 +153,7 @@ class _PreliminaryGroupState extends State<_PreliminaryGroup>
   void initState() {
     super.initState();
     _dataController = TextEditingController();
+    _data = widget.initialValue.toList();
   }
 
   @override
@@ -204,7 +224,7 @@ class _PreliminaryGroupState extends State<_PreliminaryGroup>
                 _promoteFormKey.currentState!.save();
                 // Convert to characters.
                 debugPrint('>>> data: $_data');
-                widget.onSaved(_data.toSet());
+                widget.onSaved(_data.toList());
               },
             ),
           ],
