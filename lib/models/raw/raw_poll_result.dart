@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:tsdm_converter/constants/tags.dart';
 
 /// 接口返回的投票结果
@@ -15,17 +16,18 @@ final class RawPollResult extends Equatable {
   });
 
   static final _re = RegExp('$kTrHead'
-      '$kTdHead$kNotStart$kTdTail'
-      '$kTdHead(?<character>$kNotAt)@(?<bangumi>$kNotStart)$kTdTail'
-      '$kTdHead(?<all>$kNum)$kTdTail'
-      '$kTdHead(?<effective>$kNum)$kTdTail'
-      '$kTdHead(?<ranking>$kNum)$kTdTail'
+      '$kTdHead($kAlignHead)?$kNotStart($kAlignTail)?$kTdTail'
+      '$kTdHead($kAlignHead)?(?<character>$kNotAt)@(?<bangumi>$kNotStart)($kAlignTail)?$kTdTail'
+      '$kTdHead($kAlignHead)?(?<all>$kNum)($kAlignTail)?$kTdTail'
+      '$kTdHead($kAlignHead)?(?<effective>$kNum)($kAlignTail)?$kTdTail'
+      '$kTdHead($kAlignHead)?(?<ranking>$kNum)($kAlignTail)?$kTdTail'
       '$kTrTail');
 
   /// Parse a result from data.
   static RawPollResult? parse(String data) {
     final match = _re.firstMatch(data);
     if (match == null) {
+      debugPrint('data not matched: $data');
       return null;
     }
 

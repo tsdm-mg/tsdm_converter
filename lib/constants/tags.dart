@@ -5,7 +5,7 @@ const kTrHead = r'\[tr\]';
 const kTrTail = r'\[/tr\]';
 
 /// Head of td
-const kTdHead = r'\[td\]';
+const kTdHead = r'\[td=?\d*\]';
 
 /// Tail of td
 const kTdTail = r'\[/td\]';
@@ -21,3 +21,9 @@ const kNotStart = r'[^\[]+';
 
 /// Any not ] characters.
 const kNotClose = r'[^\]]+';
+
+/// Alignment
+const kAlignHead = r'\[align=\w*\]';
+
+/// Alignment
+const kAlignTail = r'\[/align\]';
