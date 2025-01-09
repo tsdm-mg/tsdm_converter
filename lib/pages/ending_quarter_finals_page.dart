@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tsdm_converter/models/common/models.dart';
 import 'package:tsdm_converter/models/raw/raw_poll_result.dart';
+import 'package:tsdm_converter/models/report/ending_quarter_report.dart';
+import 'package:tsdm_converter/utils/copy_clipboard.dart';
 
 enum _Group {
   a,
@@ -26,16 +28,12 @@ class _EndingQuarterFinalsPageState extends State<EndingQuarterFinalsPage>
   final _formKey = GlobalKey<FormState>();
   late TabController _tabController;
 
-  final _data = <_Group, List<Character>>{};
+  final _data = <_Group, List<CharacterPollResult>>{};
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
-    _data[_Group.a] = [];
-    _data[_Group.b] = [];
-    _data[_Group.c] = [];
-    _data[_Group.d] = [];
   }
 
   @override
@@ -51,36 +49,50 @@ class _EndingQuarterFinalsPageState extends State<EndingQuarterFinalsPage>
       body: Form(
         key: _formKey,
         child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           children: [
             _GroupForm(
-              groupName: 'A组',
+              groupName: '第1组',
               key: const ValueKey('A'),
               onSave: (characters) => _data[_Group.a] = characters,
             ),
+            const SizedBox(height: 8),
             _GroupForm(
-              groupName: 'B组',
+              groupName: '第2组',
               key: const ValueKey('B'),
               onSave: (characters) => _data[_Group.b] = characters,
             ),
+            const SizedBox(height: 8),
             _GroupForm(
-              groupName: 'C组',
+              groupName: '第3组',
               key: const ValueKey('C'),
               onSave: (characters) => _data[_Group.c] = characters,
             ),
+            const SizedBox(height: 8),
             _GroupForm(
-              groupName: 'D组',
+              groupName: '第4组',
               key: const ValueKey('D'),
               onSave: (characters) => _data[_Group.d] = characters,
             ),
+            const SizedBox(height: 8),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.generating_tokens_outlined),
-        onPressed: () {
+        child: const Icon(Icons.flash_on_outlined),
+        onPressed: () async {
           if (!_formKey.currentState!.validate()) {
             return;
           }
+
+          final result = EndingQuarterReport.build(
+            groupAPolls: _data[_Group.a]!,
+            groupBPolls: _data[_Group.b]!,
+            groupCPolls: _data[_Group.c]!,
+            groupDPolls: _data[_Group.d]!,
+          );
+
+          await copyToClipboard(context, result.toReport());
         },
       ),
     );
@@ -99,7 +111,7 @@ class _GroupForm extends StatefulWidget {
   final String groupName;
 
   /// Callback when form saved.
-  final void Function(List<Character> characters) onSave;
+  final void Function(List<CharacterPollResult> characters) onSave;
 
   @override
   State<_GroupForm> createState() => _GroupFormState();
@@ -124,8 +136,8 @@ class _GroupFormState extends State<_GroupForm> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: _textController,
-      decoration: const InputDecoration(
-        labelText: '投票结果',
+      decoration: InputDecoration(
+        labelText: '${widget.groupName} 投票结果',
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
       maxLines: null,
@@ -135,13 +147,13 @@ class _GroupFormState extends State<_GroupForm> {
           return '投票结果不能为空';
         }
 
-        final polls = _textController.text
+        final characters = _textController.text
             .trim()
             .split('\n')
             .map(RawPollResult.parse)
             .whereType<RawPollResult>()
             .map(CharacterPollResult.fromRaw);
-        print('>>> ${widget.groupName} GROUP POLLS: $polls');
+        widget.onSave(characters.toList());
 
         return null;
       },

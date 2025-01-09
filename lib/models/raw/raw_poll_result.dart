@@ -17,7 +17,9 @@ final class RawPollResult extends Equatable {
 
   static final _re = RegExp('$kTrHead'
       '$kTdHead($kAlignHead)?$kNotStart($kAlignTail)?$kTdTail'
-      '$kTdHead($kAlignHead)?(?<character>$kNotAt)@(?<bangumi>$kNotStart)($kAlignTail)?$kTdTail'
+      '$kTdHead($kAlignHead)?(?<character>$kNotAt)'
+      '@'
+      '(?<bangumi>$kNotStart)($kAlignTail)?$kTdTail'
       '$kTdHead($kAlignHead)?(?<all>$kNum)($kAlignTail)?$kTdTail'
       '$kTdHead($kAlignHead)?(?<effective>$kNum)($kAlignTail)?$kTdTail'
       '$kTdHead($kAlignHead)?(?<ranking>$kNum)($kAlignTail)?$kTdTail'
