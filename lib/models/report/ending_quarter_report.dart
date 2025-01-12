@@ -4,7 +4,7 @@ import 'package:tsdm_converter/models/report/base.dart';
 import 'package:tsdm_converter/utils/collect.dart';
 
 /// 完结篇四分之一决赛战报
-final class EndingQuarterReport implements BaseReport {
+final class EndingQuarterReport implements EndingsReport {
   /// Constructor.
   const EndingQuarterReport({
     required this.groupA,
@@ -144,7 +144,7 @@ $content
 ''';
   }
 
-  String _generateBangumiStatistics() {
+  String _generateBangumiStatisticsBody() {
     ////////// Without promote info //////////
     final semiFinalsPolls = [groupA, groupB, groupC, groupD]
         .map((e) => e.promoteSemiFinals)
@@ -193,8 +193,6 @@ $content
     );
 
     return '''
-[align=center][size=5][color=#ff0000]完结篇四分之一决赛晋级状况[/color][/size][/align][table=98%]
-[tr][td][size=3][color=#0000ff]晋级赛事[/color][/size][/td][td][size=3][color=#0000ff]动画[/color][/size][/td][td][size=3][color=#0000ff]人数[/color][/size][/td][/tr]
 [tr][td=1,3]半决赛[/td]${semiFinalsResultWithPromoteInfo.sortByCharacters().take(3).map((e) => e.toReport()).join('\n[tr]')}
 [tr=rgb(255, 250, 205)][td=5,1]
 [/td][/tr]
@@ -202,7 +200,18 @@ $content
 [tr=rgb(255, 250, 205)][td=5,1]
 [/td][/tr]
 [tr][td=1,8,103]四分之一决赛[/td]${allResultWithPromoteInfo.sortByCharacters().map((e) => e.toReport()).join('\n[tr]')}
+''';
+  }
+
+  String _generateBangumiStatistics() {
+    return '''
+[align=center][size=5][color=#ff0000]完结篇四分之一决赛晋级状况[/color][/size][/align][table=98%]
+[tr][td][size=3][color=#0000ff]晋级赛事[/color][/size][/td][td][size=3][color=#0000ff]动画[/color][/size][/td][td][size=3][color=#0000ff]人数[/color][/size][/td][/tr]
+${_generateBangumiStatisticsBody()}
 [/table]
 ''';
   }
+
+  @override
+  String toPromoteReport() => _generateBangumiStatisticsBody();
 }
