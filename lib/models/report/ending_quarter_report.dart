@@ -69,11 +69,8 @@ final class EndingQuarterReport implements EndingsReport {
   String toReport() {
     return '''
 ${_generateSemiFinalsStatistics()}
-
 ${_generateQualifyingFirstStatistics()}
-
 ${_generatePinned9thStatistics()}
-
 ${_generateBangumiStatistics()}
 ''';
   }
@@ -92,12 +89,10 @@ ${_generateBangumiStatistics()}
         .join('\n');
 
     return '''
-[align=center][color=#ff00][size=5]完结篇四分之一决赛晋级角色票数[/size][/color][/align]
-[table]
-[tr][td=103][size=3][color=#0000ff]组别[/color][/size][/td][td=91][size=3][color=#0000ff]本轮排名[/color][/size][/td][td=470][size=3][color=#0000ff]角色[/color][/size][/td][td=90][size=3][color=#0000ff]票数[/color][/size][/td][td=101][size=3][color=#0000ff]有效票数[/color][/size][/td][/tr]
+[align=center][color=#ff00][size=5][b]完结篇四分之一决赛晋级角色票数[/b][/size][/color][/align][table]
+[tr][td=103][size=3][color=#0000ff][b]组别[/b][/color][/size][/td][td=91][size=3][color=#0000ff][b]本轮排名[/b][/color][/size][/td][td=470][size=3][color=#0000ff][b]角色[/b][/color][/size][/td][td=90][size=3][color=#0000ff][b]票数[/b][/color][/size][/td][td=101][size=3][color=#0000ff][b]有效票数[/b][/color][/size][/td][/tr]
 $content
-[/table]
-''';
+[/table]''';
   }
 
   String _generateQualifyingFirstStatistics() {
@@ -114,12 +109,10 @@ $content
         .join('\n');
 
     return '''
-[align=center][size=5][color=#ff0000]完结篇进入排位赛第一场角色票数[/color][/size][/align]
-[table]
-[tr][td=103][size=3][color=#0000ff]组别[/color][/size][/td][td=91][size=3][color=#0000ff]本轮排名[/color][/size][/td][td=470][size=3][color=#0000ff]角色[/color][/size][/td][td=90][size=3][color=#0000ff]票数[/color][/size][/td][td=101][size=3][color=#0000ff]有效票数[/color][/size][/td][/tr]
+[align=center][size=5][color=#ff0000][b]完结篇进入排位赛第一场角色票数[/b][/color][/size][/align][table]
+[tr][td=103][size=3][color=#0000ff][b]组别[/b][/color][/size][/td][td=91][size=3][color=#0000ff][b]本轮排名[/b][/color][/size][/td][td=470][size=3][color=#0000ff][b]角色[/b][/color][/size][/td][td=90][size=3][color=#0000ff][b]票数[/b][/color][/size][/td][td=101][size=3][color=#0000ff][b]有效票数[/b][/color][/size][/td][/tr]
 $content
-[/table]
-''';
+[/table]''';
   }
 
   String _generatePinned9thStatistics() {
@@ -136,12 +129,10 @@ $content
         .join('\n');
 
     return '''
-[align=center][size=5][color=#ff0000]本届萌战最终排名第9名[/color][/size][/align]
-[table]
-[tr][td=103][size=3][color=#0000ff]组别[/color][/size][/td][td=91][size=3][color=#0000ff]最终排名[/color][/size][/td][td=470][size=3][color=#0000ff]角色[/color][/size][/td][td=90][size=3][color=#0000ff]票数[/color][/size][/td][td=101][size=3][color=#0000ff]有效票数[/color][/size][/td][/tr]
+[align=center][size=5][color=#ff0000][b]本届萌战最终排名第9名[/b][/color][/size][/align][table]
+[tr][td=103][size=3][color=#0000ff][b]组别[/b][/color][/size][/td][td=91][size=3][color=#0000ff][b]最终排名[/b][/color][/size][/td][td=470][size=3][color=#0000ff][b]角色[/b][/color][/size][/td][td=90][size=3][color=#0000ff][b]票数[/b][/color][/size][/td][td=101][size=3][color=#0000ff][b]有效票数[/b][/color][/size][/td][/tr]
 $content
-[/table]
-''';
+[/table]''';
   }
 
   String _generateBangumiStatisticsBody() {
@@ -192,24 +183,30 @@ $content
       all: allResult,
     );
 
+    //////
+
+    final semiFinals = semiFinalsResultWithPromoteInfo
+        .sortByCharacters()
+        .takeWhile((e) => e.promotedCount > 0);
+    final qualifyFirst = qualifyFirstResultWithPromoteInfo
+        .sortByCharacters()
+        .takeWhile((e) => e.promotedCount > 0);
+    final all = allResultWithPromoteInfo.sortByCharacters();
+
     return '''
-[tr][td=1,3]半决赛[/td]${semiFinalsResultWithPromoteInfo.sortByCharacters().take(3).map((e) => e.toReport()).join('\n[tr]')}
-[tr=rgb(255, 250, 205)][td=5,1]
-[/td][/tr]
-[tr][td=1,4]排位赛[/td]${qualifyFirstResultWithPromoteInfo.sortByCharacters().take(4).map((e) => e.toReport()).join('\n[tr]')}
-[tr=rgb(255, 250, 205)][td=5,1]
-[/td][/tr]
-[tr][td=1,8,103]四分之一决赛[/td]${allResultWithPromoteInfo.sortByCharacters().map((e) => e.toReport()).join('\n[tr]')}
+[tr][td=1,${semiFinals.length + qualifyFirst.length}]四分之一决赛[/td][td=1,${semiFinals.length}]半决赛[/td]${semiFinals.map((e) => e.toReport()).join('\n[tr]')}
+[tr][td=1,${qualifyFirst.length}]排位赛[/td]${qualifyFirst.map((e) => e.toReport()).join('\n[tr]')}
+[tr=rgb(255, 250, 205)][td=5,1][/td][/tr]
+[tr][td=1,${all.length}]初赛[/td][td=1,${all.length}]四分之一决赛[/td]${all.map((e) => e.toReport()).join('\n[tr]')}
 ''';
   }
 
   String _generateBangumiStatistics() {
     return '''
-[align=center][size=5][color=#ff0000]完结篇四分之一决赛晋级状况[/color][/size][/align][table=98%]
-[tr][td][size=3][color=#0000ff]晋级赛事[/color][/size][/td][td][size=3][color=#0000ff]动画[/color][/size][/td][td][size=3][color=#0000ff]人数[/color][/size][/td][/tr]
+[align=center][size=5][color=#ff0000][b]完结篇四分之一决赛晋级状况[/b][/color][/size][/align][table=98%]
+[tr][td=100][size=3][color=#0000ff][b]赛事[/b][/color][/size][/td][td=100][size=3][color=#0000ff][b]晋级赛事[/b][/color][/size][/td][td][size=3][color=#0000ff][b]动画[/b][/color][/size][/td][td][size=3][color=#0000ff][b]人数[/b][/color][/size][/td][/tr]
 ${_generateBangumiStatisticsBody()}
-[/table]
-''';
+[/table]''';
   }
 
   @override
