@@ -94,7 +94,7 @@ ${_generateBangumiStatistics()}
     return '''
 [align=center][color=#ff00][size=5]完结篇四分之一决赛晋级角色票数[/size][/color][/align]
 [table]
-[tr][td=103][size=3][color=#0000ff]组别[/color][/size][/td][td=91][size=3][color=#0000ff]排名[/color][/size][/td][td=470][size=3][color=#0000ff]角色[/color][/size][/td][td=90][size=3][color=#0000ff]票数[/color][/size][/td][td=101][size=3][color=#0000ff]有效票数[/color][/size][/td][/tr]
+[tr][td=103][size=3][color=#0000ff]组别[/color][/size][/td][td=91][size=3][color=#0000ff]本轮排名[/color][/size][/td][td=470][size=3][color=#0000ff]角色[/color][/size][/td][td=90][size=3][color=#0000ff]票数[/color][/size][/td][td=101][size=3][color=#0000ff]有效票数[/color][/size][/td][/tr]
 $content
 [/table]
 ''';
@@ -116,7 +116,7 @@ $content
     return '''
 [align=center][size=5][color=#ff0000]完结篇进入排位赛第一场角色票数[/color][/size][/align]
 [table]
-[tr][td=103][size=3][color=#0000ff]组别[/color][/size][/td][td=91][size=3][color=#0000ff]排名[/color][/size][/td][td=470][size=3][color=#0000ff]角色[/color][/size][/td][td=90][size=3][color=#0000ff]票数[/color][/size][/td][td=101][size=3][color=#0000ff]有效票数[/color][/size][/td][/tr]
+[tr][td=103][size=3][color=#0000ff]组别[/color][/size][/td][td=91][size=3][color=#0000ff]本轮排名[/color][/size][/td][td=470][size=3][color=#0000ff]角色[/color][/size][/td][td=90][size=3][color=#0000ff]票数[/color][/size][/td][td=101][size=3][color=#0000ff]有效票数[/color][/size][/td][/tr]
 $content
 [/table]
 ''';
@@ -138,7 +138,7 @@ $content
     return '''
 [align=center][size=5][color=#ff0000]本届萌战最终排名第9名[/color][/size][/align]
 [table]
-[tr][td=103][size=3][color=#0000ff]组别[/color][/size][/td][td=91][size=3][color=#0000ff]排名[/color][/size][/td][td=470][size=3][color=#0000ff]角色[/color][/size][/td][td=90][size=3][color=#0000ff]票数[/color][/size][/td][td=101][size=3][color=#0000ff]有效票数[/color][/size][/td][/tr]
+[tr][td=103][size=3][color=#0000ff]组别[/color][/size][/td][td=91][size=3][color=#0000ff]最终排名[/color][/size][/td][td=470][size=3][color=#0000ff]角色[/color][/size][/td][td=90][size=3][color=#0000ff]票数[/color][/size][/td][td=101][size=3][color=#0000ff]有效票数[/color][/size][/td][/tr]
 $content
 [/table]
 ''';

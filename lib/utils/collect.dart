@@ -29,11 +29,15 @@ List<BangumiPollResult> mergeBangumiPromoteInfo(
         mergedPoll[p.name] = BangumiPollResult(
           name: p.name,
           characters: {...mergedPoll[p.name]!.characters, ...p.characters},
+          effective: p.effective,
+          all: p.all,
         );
       } else {
         mergedPoll[p.name] = BangumiPollResult(
           name: p.name,
           characters: p.characters,
+          effective: p.effective,
+          all: p.all,
         );
       }
     }

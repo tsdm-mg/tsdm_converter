@@ -64,6 +64,8 @@ final class BangumiPollResult with BangumiPollResultMappable {
   const BangumiPollResult({
     required this.name,
     required this.characters,
+    required this.effective,
+    required this.all,
     this.promotedCount = 0,
   }) : charactersCount = characters.length;
 
@@ -88,6 +90,8 @@ final class BangumiPollResult with BangumiPollResultMappable {
             ),
           )
           .toSet(),
+      effective: characters.fold(0, (acc, e) => acc + e.effective),
+      all: characters.fold(0, (acc, e) => acc + e.all),
     );
   }
 
@@ -109,9 +113,16 @@ final class BangumiPollResult with BangumiPollResultMappable {
   /// 一个完整的结果导入到这里面。
   final int promotedCount;
 
+  /// 有效票数
+  final int effective;
+
+  /// 总票数
+  final int all;
+
   /// Convert to report.
   String toReport() => '[td]$name[/td]'
-      '[td]$promotedCount[color=#c0c0c0]/${characters.length}[/color][/td][/tr]';
+      '[td]$promotedCount[color=#c0c0c0]/${characters.length}[/color][/td]'
+      '[/tr]';
 }
 
 /// Extension on set of `BangumiPollResult`.
