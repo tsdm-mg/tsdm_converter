@@ -119,21 +119,24 @@ $content
   String _generateQualifyingSecondStatistics() {
     final content = [
       (
+        m: 'NO.2',
         n: groupSemiFinalsA.groupName,
         c: groupSemiFinalsA.promoteQualifyingSecond,
       ),
       (
+        m: 'NO.2',
         n: groupSemiFinalsB.groupName,
         c: groupSemiFinalsB.promoteQualifyingSecond,
       ),
       (
+        m: 'NO.1',
         n: groupQualifyingFirst.groupName,
         c: groupQualifyingFirst.promoteQualifyingSecond,
       ),
     ]
         .map(
           (e) => '[tr][td]${e.n}[/td]'
-              '[td]NO.1[/td]'
+              '[td]${e.m}[/td]'
               '[td]${e.c.name}@${e.c.bangumi}[/td]'
               '[td][color=silver]${e.c.all}[/color]'
               '[/td][td]${e.c.effective}[/td]'
@@ -152,21 +155,21 @@ $content
   String _generatePinned678Statistics() {
     final content = [
       (
-        n: 'NO.2',
+        n: 'NO.6',
         c: groupQualifyingFirst.pinnedThe6Th,
       ),
       (
-        n: 'NO.3',
+        n: 'NO.7',
         c: groupQualifyingFirst.pinnedThe7Th,
       ),
       (
-        n: 'NO.4',
+        n: 'NO.8',
         c: groupQualifyingFirst.pinnedThe8Th,
       ),
     ]
         .map(
           (e) => '[tr][td]排位赛第一场${e.n}[/td]'
-              '[td]NO.1[/td]'
+              '[td]${e.n}[/td]'
               '[td]${e.c.name}@${e.c.bangumi}[/td]'
               '[td][color=silver]${e.c.all}[/color]'
               '[/td][td]${e.c.effective}[/td]'
