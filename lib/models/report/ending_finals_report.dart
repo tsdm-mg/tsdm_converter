@@ -46,6 +46,8 @@ final class EndingFinalsReport implements EndingsReport {
   final EndingQualifyingSecondPromoteResult groupQualifyingSecond;
 
   /// 半决赛晋级状况
+  ///
+  /// 决赛的晋级状况和半决赛晋级状况用同一个表格即可
   final String semiPromoteResult;
 
   String _generateFinalsStatistics() {
@@ -82,6 +84,7 @@ final class EndingFinalsReport implements EndingsReport {
     return '''
 ${_generateFinalsStatistics()}
 ${_generateQualifyingSecondStatistics()}
+$semiPromoteResult
 ''';
   }
 }

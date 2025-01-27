@@ -38,7 +38,7 @@ final class CharacterPollResult with CharacterPollResultMappable {
 
   /// Convert to bbcode.
   String toBBCode() =>
-      '[td]$ranking[/td][td]$name@$bangumi[/td][td]$all[/td][td]$effective[/td][/tr]';
+      '[td]$ranking[/td][td]$name@$bangumi[/td][td][color=silver]$all[/color][/td][td]$effective[/td][/tr]';
 }
 
 /// Extension of iterable poll result.

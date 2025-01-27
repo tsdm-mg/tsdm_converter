@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tsdm_converter/models/common/models.dart';
+import 'package:tsdm_converter/models/report/ending_finals_report.dart';
+import 'package:tsdm_converter/pages/report_page.dart';
 import 'package:tsdm_converter/widgets/group_form.dart';
 
 /// 分组
@@ -76,7 +78,24 @@ class _EndingFinalsPageState extends State<EndingFinalsPage> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.flash_on_outlined),
         onPressed: () async {
-          throw UnimplementedError();
+          if (!_formKey.currentState!.validate()) {
+            return;
+          }
+
+          final result = EndingFinalsReport.build(
+            groupFinalPolls: _data[_Group.finals]!,
+            groupQualifyingSecondPolls: _data[_Group.qualifyingSecond]!,
+            semiPromoteResult: _semiPromoteController.text.trim(),
+          );
+
+          await Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) => ReportPage(
+                report: result.toReport(),
+                promoteReport: '',
+              ),
+            ),
+          );
         },
       ),
     );
