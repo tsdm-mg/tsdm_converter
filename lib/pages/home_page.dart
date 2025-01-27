@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tsdm_converter/pages/ending_finals_page.dart';
 import 'package:tsdm_converter/pages/ending_quarter_finals_page.dart';
 import 'package:tsdm_converter/pages/ending_semi_finals_page.dart';
 import 'package:tsdm_converter/pages/finals/finals_page.dart';
@@ -18,6 +19,7 @@ final _targets = [
   _Target('完结篇', (_) => const FinalsPage()),
   _Target('完结篇\n四分之一决赛战报', (_) => const EndingQuarterFinalsPage()),
   _Target('完结篇\n半决赛战报', (_) => const EndingSemiFinalsPage()),
+  _Target('完结篇\n决赛战报', (_) => const EndingFinalsPage()),
 ];
 
 /// Home of app.

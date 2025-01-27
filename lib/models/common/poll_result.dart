@@ -18,7 +18,7 @@ final class CharacterPollResult with CharacterPollResultMappable {
         bangumi: raw.bangumi,
         all: raw.all,
         effective: raw.effective,
-        ranking: raw.ranking,
+        ranking: '${raw.ranking}',
       );
 
   /// Character vote for.
@@ -34,7 +34,7 @@ final class CharacterPollResult with CharacterPollResultMappable {
   final int effective;
 
   /// Ranking.
-  final int ranking;
+  final String ranking;
 
   /// Convert to bbcode.
   String toBBCode() =>

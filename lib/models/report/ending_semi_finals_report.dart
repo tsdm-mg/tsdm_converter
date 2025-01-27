@@ -49,7 +49,7 @@ final class EndingSemiFinalsReport implements EndingsReport {
   /// 半决赛第1组晋级结果
   final EndingSemiFinalsPromoteResult groupSemiFinalsA;
 
-  /// 半决赛第1组晋级结果
+  /// 半决赛第2组晋级结果
   final EndingSemiFinalsPromoteResult groupSemiFinalsB;
 
   /// 排位赛第一场晋级结果

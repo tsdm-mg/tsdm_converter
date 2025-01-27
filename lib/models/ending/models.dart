@@ -5,3 +5,5 @@ part 'models.mapper.dart';
 part 'qualifying_first_promote_result.dart';
 part 'quarter_promote_result.dart';
 part 'semi_finals_promote_result.dart';
+part 'finals_promote_result.dart';
+part 'qualifying_second_promote_result.dart';
