@@ -123,6 +123,11 @@ final class BangumiPollResult with BangumiPollResultMappable {
   String toReport() => '[td]$name[/td]'
       '[td]$promotedCount[color=#c0c0c0]/${characters.length}[/color][/td]'
       '[/tr]';
+
+  /// Convert to report.
+  String toReportOnlyPromotedCount() => '[td]$name[/td]'
+      '[td]$promotedCount[/td]'
+      '[/tr]';
 }
 
 /// Extension on set of `BangumiPollResult`.

@@ -92,148 +92,151 @@ class _SeasonFinalsPageState extends State<SeasonFinalsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: Form(
-        key: _formKey,
-        child: Row(
-          children: [
-            // Left control column.
-            SizedBox(
-              width: 160,
-              child: Column(
-                children: [
-                  ...[Stage.winter, Stage.spring, Stage.summer, Stage.autumn]
-                      .map(
-                    (e) => RadioListTile(
-                      title: Text(e.name),
-                      value: e,
-                      groupValue: _stage,
-                      onChanged: (v) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('季节篇决赛'),),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Form(
+          key: _formKey,
+          child: Row(
+            children: [
+              // Left control column.
+              SizedBox(
+                width: 160,
+                child: Column(
+                  children: [
+                    ...[Stage.winter, Stage.spring, Stage.summer, Stage.autumn]
+                        .map(
+                          (e) => RadioListTile(
+                        title: Text(e.name),
+                        value: e,
+                        groupValue: _stage,
+                        onChanged: (v) {
+                          if (v == null) {
+                            return;
+                          }
+                          setState(() => _stage = v);
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: _repechagePromoteLimitController,
+                      decoration: const InputDecoration(labelText: '复活赛晋级角色数'),
+                      validator: (v) {
                         if (v == null) {
-                          return;
+                          return kInvalidValue;
                         }
-                        setState(() => _stage = v);
+
+                        final vv = int.tryParse(v);
+                        if (vv == null || vv < 1) {
+                          return kInvalidValue;
+                        }
+                        return null;
                       },
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: _repechagePromoteLimitController,
-                    decoration: const InputDecoration(labelText: '复活赛晋级角色数'),
-                    validator: (v) {
-                      if (v == null) {
-                        return kInvalidValue;
-                      }
-
-                      final vv = int.tryParse(v);
-                      if (vv == null || vv < 1) {
-                        return kInvalidValue;
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 32),
-                  Row(
-                    children: [
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: FilledButton(
-                          onPressed: _generateReport,
-                          child: const Text('生成战报'),
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                    ],
-                  ),
-                  const SizedBox(height: 18),
-                  Row(
-                    children: [
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: FilledButton.tonal(
-                          onPressed: () async => copyToClipboard(
-                            context,
-                            _reportController.text,
-                          ),
-                          child: const Text('复制战报'),
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 12),
-
-            // Right side content column.
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.info_outline,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          '输入投票结果，计算决赛战报',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
+                    const SizedBox(height: 32),
+                    Row(
+                      children: [
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: FilledButton(
+                            onPressed: _generateReport,
+                            child: const Text('生成战报'),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  // Input
-                  const SectionTitle('投票结果'),
-                  const SizedBox(height: 8),
-                  Flexible(
-                    child: TextField(
-                      controller: _finalsController,
-                      decoration: const InputDecoration(
-                        labelText: '决赛投票结果',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                      ),
-                      maxLines: null,
-                      minLines: 7,
+                        const SizedBox(width: 4),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  Flexible(
-                    child: TextField(
-                      controller: _repechageController,
-                      decoration: const InputDecoration(
-                        labelText: '复活赛投票结果',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                      ),
-                      maxLines: null,
-                      minLines: 7,
+                    const SizedBox(height: 18),
+                    Row(
+                      children: [
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: FilledButton.tonal(
+                            onPressed: () async => copyToClipboard(
+                              context,
+                              _reportController.text,
+                            ),
+                            child: const Text('复制战报'),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Output
-                  const SectionTitle('决赛战报'),
-                  const SizedBox(height: 8),
-                  Expanded(
-                    flex: 2,
-                    child: TextField(
-                      controller: _reportController,
-                      readOnly: true,
-                      maxLines: null,
-                      minLines: 14,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+              const SizedBox(width: 12),
+
+              // Right side content column.
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            '输入投票结果，计算决赛战报',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    // Input
+                    const SectionTitle('投票结果'),
+                    const SizedBox(height: 8),
+                    Flexible(
+                      child: TextField(
+                        controller: _finalsController,
+                        decoration: const InputDecoration(
+                          labelText: '决赛投票结果',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                        ),
+                        maxLines: null,
+                        minLines: 7,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Flexible(
+                      child: TextField(
+                        controller: _repechageController,
+                        decoration: const InputDecoration(
+                          labelText: '复活赛投票结果',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                        ),
+                        maxLines: null,
+                        minLines: 7,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Output
+                    const SectionTitle('决赛战报'),
+                    const SizedBox(height: 8),
+                    Expanded(
+                      flex: 2,
+                      child: TextField(
+                        controller: _reportController,
+                        readOnly: true,
+                        maxLines: null,
+                        minLines: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
