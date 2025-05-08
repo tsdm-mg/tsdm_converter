@@ -137,18 +137,13 @@ $content
 
   String _generateBangumiStatisticsBody() {
     ////////// Without promote info //////////
-    final semiFinalsPolls = [groupA, groupB, groupC, groupD]
-        .map((e) => e.promoteSemiFinals)
-        .toList();
+    final semiFinalsPolls = [groupA, groupB, groupC, groupD].map((e) => e.promoteSemiFinals).toList();
     final semiFinalsResult = collectBangumiInfo(semiFinalsPolls);
 
-    final qualifyingFirstPolls = [groupA, groupB, groupC, groupD]
-        .map((e) => e.promoteQualifyingFirst)
-        .toList();
+    final qualifyingFirstPolls = [groupA, groupB, groupC, groupD].map((e) => e.promoteQualifyingFirst).toList();
     final qualifyingFirstResult = collectBangumiInfo(qualifyingFirstPolls);
 
-    final pinnedPolls =
-        [groupA, groupB, groupC, groupD].map((e) => e.pinnedThe9th).toList();
+    final pinnedPolls = [groupA, groupB, groupC, groupD].map((e) => e.pinnedThe9th).toList();
     final pinnedResult = collectBangumiInfo(pinnedPolls);
 
     /// For count only
@@ -185,12 +180,8 @@ $content
 
     //////
 
-    final semiFinals = semiFinalsResultWithPromoteInfo
-        .sortByCharacters()
-        .takeWhile((e) => e.promotedCount > 0);
-    final qualifyFirst = qualifyFirstResultWithPromoteInfo
-        .sortByCharacters()
-        .takeWhile((e) => e.promotedCount > 0);
+    final semiFinals = semiFinalsResultWithPromoteInfo.sortByCharacters().takeWhile((e) => e.promotedCount > 0);
+    final qualifyFirst = qualifyFirstResultWithPromoteInfo.sortByCharacters().takeWhile((e) => e.promotedCount > 0);
     final all = allResultWithPromoteInfo.sortByCharacters();
 
     return '''
