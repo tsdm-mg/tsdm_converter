@@ -26,7 +26,7 @@ final class SeasonFinalsReport implements BaseReport {
     List<CharacterPollResult> finalsPoll,
     List<CharacterPollResult> repechagePoll,
   ) {
-    final repechagePromoted = repechagePoll.take(promoteLimit).toList();
+    final repechagePromoted = repechagePoll.takeWhile((e) => int.parse(e.ranking) <= promoteLimit).toList();
     final finalsBangumiResult = collectBangumiInfo(finalsPoll);
     final repechageBangumiResult = collectBangumiInfo(repechagePromoted);
 
@@ -64,8 +64,7 @@ final class SeasonFinalsReport implements BaseReport {
 
   @override
   String toReport() {
-    final mergedBangumiResult =
-        mergeBangumiPromoteInfo([finalsBangumiResult, repechageBangumiResult]);
+    final mergedBangumiResult = mergeBangumiPromoteInfo([finalsBangumiResult, repechageBangumiResult]);
 
     final finalsResultWithPromoteInfo = calculateBangumiPromoteCount(
       promoted: finalsBangumiResult,
