@@ -5,6 +5,8 @@ import 'package:tsdm_converter/pages/ending_semi_finals_page.dart';
 import 'package:tsdm_converter/pages/finals/finals_page.dart';
 import 'package:tsdm_converter/pages/season_finals_page.dart';
 import 'package:tsdm_converter/pages/yuri/yuri_preliminary_page.dart';
+import 'package:tsdm_converter/pages/yuri/yuri_rematch_page.dart';
+import 'package:tsdm_converter/pages/yuri/yuri_semi_finas_page.dart';
 
 class _Target {
   const _Target(
@@ -24,6 +26,8 @@ final _targets = [
   _Target('完结篇\n半决赛战报', (_) => const EndingSemiFinalsPage()),
   _Target('完结篇\n决赛战报', (_) => const EndingFinalsPage()),
   _Target('百合表演赛\n初赛', (_) => const YuriPreliminaryPage()),
+  _Target('百合表演赛\n复赛', (_) => const YuriRematchPage()),
+  _Target('百合表演赛\n半决赛', (_) => const YuriSemiFinalsPage()),
 ];
 
 /// Home of app.
@@ -48,8 +52,7 @@ class _HomePageState extends State<HomePage> {
             .map(
               (e) => Card(
                 child: InkWell(
-                  onTap: () async => Navigator.of(context)
-                      .push(MaterialPageRoute(builder: e.builder)),
+                  onTap: () async => Navigator.of(context).push(MaterialPageRoute(builder: e.builder)),
                   child: Center(
                     child: Text(
                       e.name,
