@@ -4,6 +4,7 @@ import 'package:tsdm_converter/pages/ending_quarter_finals_page.dart';
 import 'package:tsdm_converter/pages/ending_semi_finals_page.dart';
 import 'package:tsdm_converter/pages/finals/finals_page.dart';
 import 'package:tsdm_converter/pages/season_finals_page.dart';
+import 'package:tsdm_converter/pages/yuri/yuri_finals_page.dart';
 import 'package:tsdm_converter/pages/yuri/yuri_preliminary_page.dart';
 import 'package:tsdm_converter/pages/yuri/yuri_rematch_page.dart';
 import 'package:tsdm_converter/pages/yuri/yuri_semi_finas_page.dart';
@@ -28,6 +29,7 @@ final _targets = [
   _Target('百合表演赛\n初赛', (_) => const YuriPreliminaryPage()),
   _Target('百合表演赛\n复赛', (_) => const YuriRematchPage()),
   _Target('百合表演赛\n半决赛', (_) => const YuriSemiFinalsPage()),
+  _Target('百合表演赛\n总决赛', (_) => const YuriFinalsPage()),
 ];
 
 /// Home of app.
