@@ -4,6 +4,7 @@ import 'package:tsdm_converter/pages/ending_quarter_finals_page.dart';
 import 'package:tsdm_converter/pages/ending_semi_finals_page.dart';
 import 'package:tsdm_converter/pages/finals/finals_page.dart';
 import 'package:tsdm_converter/pages/season_finals_page.dart';
+import 'package:tsdm_converter/pages/season_preliminary_page.dart';
 import 'package:tsdm_converter/pages/yuri/yuri_finals_page.dart';
 import 'package:tsdm_converter/pages/yuri/yuri_preliminary_page.dart';
 import 'package:tsdm_converter/pages/yuri/yuri_rematch_page.dart';
@@ -21,6 +22,7 @@ class _Target {
 }
 
 final _targets = [
+  _Target('季节篇初赛', (_) => const SeasonPreliminaryPage()),
   _Target('季节篇决赛', (_) => const SeasonFinalsPage()),
   _Target('完结篇', (_) => const FinalsPage()),
   _Target('完结篇\n四分之一决赛战报', (_) => const EndingQuarterFinalsPage()),
