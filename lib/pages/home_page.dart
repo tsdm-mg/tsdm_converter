@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tsdm_converter/models/report/starlight_rematch_report.dart';
 import 'package:tsdm_converter/pages/ending_finals_page.dart';
 import 'package:tsdm_converter/pages/ending_quarter_finals_page.dart';
 import 'package:tsdm_converter/pages/ending_semi_finals_page.dart';
@@ -6,6 +7,7 @@ import 'package:tsdm_converter/pages/finals/finals_page.dart';
 import 'package:tsdm_converter/pages/season_finals_page.dart';
 import 'package:tsdm_converter/pages/season_preliminary_page.dart';
 import 'package:tsdm_converter/pages/starlight_preliminary_page.dart';
+import 'package:tsdm_converter/pages/starlight_rematch_page.dart';
 import 'package:tsdm_converter/pages/yuri/yuri_finals_page.dart';
 import 'package:tsdm_converter/pages/yuri/yuri_preliminary_page.dart';
 import 'package:tsdm_converter/pages/yuri/yuri_rematch_page.dart';
@@ -34,6 +36,7 @@ final _targets = [
   _Target('百合表演赛\n半决赛', (_) => const YuriSemiFinalsPage()),
   _Target('百合表演赛\n总决赛', (_) => const YuriFinalsPage()),
   _Target('星耀初赛', (_) => const StarlightPreliminaryPage()),
+  _Target('星耀复赛', (_) => const StarlightRematchPage()),
 ];
 
 /// Home of app.
