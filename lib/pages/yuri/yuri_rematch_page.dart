@@ -84,7 +84,7 @@ class _YuriRematchPageState extends State<YuriRematchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('百合表演赛 复赛'),
+        title: const Text('百合表演赛 复赛'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -97,7 +97,7 @@ class _YuriRematchPageState extends State<YuriRematchPage> {
                 child: Column(
                   children: [
                     TextButton(
-                      child: Text('生成战报'),
+                      child: const Text('生成战报'),
                       onPressed: () async => _generateReport(),
                     )
                   ],

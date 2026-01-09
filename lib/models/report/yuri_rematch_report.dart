@@ -86,7 +86,7 @@ final class YuriRematchReport implements BaseReport {
     ]
         .map((e) => '''[tr][td=5,1,965][size=3][color=#ffa500][b]${e.$1}[/b][/color][/size][/td][/tr]
 [tr][td]排名[/td][td]角色[/td][td]得票[/td][td]有效得票[/td][td]晋级情况[/td][/tr]
-${e.$2.map((ch) => '[tr][td]${ch.ranking}[/td][td]${ch.name + "@" + ch.bangumi}[/td][td]${ch.all}[/td][td]${ch.effective}[/td][td]${int.parse(ch.ranking) <= this.promoteLimit ? "半决赛" : "淘汰"}[/td][/tr]').join("\n")}''')
+${e.$2.map((ch) => '[tr][td]${ch.ranking}[/td][td]${"${ch.name}@${ch.bangumi}"}[/td][td]${ch.all}[/td][td]${ch.effective}[/td][td]${int.parse(ch.ranking) <= promoteLimit ? "半决赛" : "淘汰"}[/td][/tr]').join("\n")}''')
         .join('\n');
 
     return '''

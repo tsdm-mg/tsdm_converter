@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:tsdm_converter/models/common/models.dart';
 import 'package:tsdm_converter/models/report/base.dart';
-import 'package:tsdm_converter/utils/collect.dart';
 
 /// 百合表演赛 总决赛
 final class YuriFinalsReport implements BaseReport {
@@ -47,7 +46,7 @@ final class YuriFinalsReport implements BaseReport {
       ('第三名', characters3rd),
       ('第四名', characters4th),
     ].mapIndexed((idx, e) =>
-        '[tr][td]${idx + 1}[/td][td]${e.$2.name + "@" + e.$2.bangumi}[/td][td]${e.$2.all}[/td][td]${e.$2.effective}[/td][td]${e.$1}[/td][/tr]');
+        '[tr][td]${idx + 1}[/td][td]${"${e.$2.name}@${e.$2.bangumi}"}[/td][td]${e.$2.all}[/td][td]${e.$2.effective}[/td][td]${e.$1}[/td][/tr]');
 
     return '''
 [b][color=Red][size=5][align=center][b]2025天使动漫萌战 百合表演赛总决赛票数统计[/b][/align][/size][/color][/b][table=98%]

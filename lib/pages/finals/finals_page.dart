@@ -23,7 +23,7 @@ class _FinalsPageState extends State<FinalsPage> {
   /// Completed process percentage.
   final double _process = 0;
 
-  var _info = EndingPreliminaryInfo.empty;
+  EndingPreliminaryInfo _info = EndingPreliminaryInfo.empty;
 
   String _infoToString() {
     const encoder = JsonEncoder.withIndent('  ');

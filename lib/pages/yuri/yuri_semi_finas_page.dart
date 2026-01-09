@@ -64,7 +64,7 @@ class _YuriSemiFinalsPageState extends State<YuriSemiFinalsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('百合表演赛 半决赛'),
+        title: const Text('百合表演赛 半决赛'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -77,7 +77,7 @@ class _YuriSemiFinalsPageState extends State<YuriSemiFinalsPage> {
                 child: Column(
                   children: [
                     TextButton(
-                      child: Text('生成战报'),
+                      child: const Text('生成战报'),
                       onPressed: () async => _generateReport(),
                     )
                   ],
