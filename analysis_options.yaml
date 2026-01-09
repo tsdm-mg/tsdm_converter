@@ -10,6 +10,7 @@ analyzer:
     depend_on_referenced_packages: error
     # Now we adjust the maximum line to 120
     lines_longer_than_80_chars: ignore
+    leading_newlines_in_multiline_strings: ignore
   exclude:
     - lib/**.g.dart
     - lib/**.freezed.dart

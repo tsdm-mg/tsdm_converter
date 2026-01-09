@@ -61,22 +61,24 @@ class _SeasonPreliminaryPageState extends State<SeasonPreliminaryPage> {
               // Left control column.
               SizedBox(
                 width: 160,
-                child: Column(
-                  children: [
-                    ...[Stage.winter, Stage.spring, Stage.summer, Stage.autumn].map(
-                      (e) => RadioListTile(
-                        title: Text(e.name),
-                        value: e,
-                        groupValue: _stage,
-                        onChanged: (v) {
-                          if (v == null) {
-                            return;
-                          }
-                          setState(() => _stage = v);
-                        },
+                child: RadioGroup<Stage>(
+                  groupValue: _stage,
+                  onChanged: (v) {
+                    if (v == null) {
+                      return;
+                    }
+                    setState(() => _stage = v);
+                  },
+                  child: Column(
+                    children: [
+                      ...[Stage.winter, Stage.spring, Stage.summer, Stage.autumn].map(
+                        (e) => RadioListTile(
+                          title: Text(e.name),
+                          value: e,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: 12),

@@ -4,7 +4,9 @@ import 'package:tsdm_converter/models/raw/raw_poll_result.dart';
 import 'package:tsdm_converter/models/report/yuri_reliminary_report.dart';
 import 'package:tsdm_converter/utils/copy_clipboard.dart';
 
+/// Yuri preliminary stage page.
 class YuriPreliminaryPage extends StatefulWidget {
+  /// Constructor.
   const YuriPreliminaryPage({super.key});
 
   @override
@@ -97,7 +99,7 @@ class _YuriPreliminaryPageState extends State<YuriPreliminaryPage> {
                     TextButton(
                       child: const Text('生成战报'),
                       onPressed: () async => _generateReport(),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -112,29 +114,37 @@ class _YuriPreliminaryPageState extends State<YuriPreliminaryPage> {
                   children: [
                     TextFormField(
                       controller: _groupAController,
-                      decoration:
-                          const InputDecoration(labelText: '初赛A组', floatingLabelBehavior: FloatingLabelBehavior.always),
+                      decoration: const InputDecoration(
+                        labelText: '初赛A组',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
                       expands: true,
                       maxLines: null,
                     ),
                     TextFormField(
                       controller: _groupBController,
-                      decoration:
-                          const InputDecoration(labelText: '初赛B组', floatingLabelBehavior: FloatingLabelBehavior.always),
+                      decoration: const InputDecoration(
+                        labelText: '初赛B组',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
                       expands: true,
                       maxLines: null,
                     ),
                     TextFormField(
                       controller: _groupCController,
-                      decoration:
-                          const InputDecoration(labelText: '初赛C组', floatingLabelBehavior: FloatingLabelBehavior.always),
+                      decoration: const InputDecoration(
+                        labelText: '初赛C组',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
                       expands: true,
                       maxLines: null,
                     ),
                     TextFormField(
                       controller: _groupDController,
-                      decoration:
-                          const InputDecoration(labelText: '初赛D组', floatingLabelBehavior: FloatingLabelBehavior.always),
+                      decoration: const InputDecoration(
+                        labelText: '初赛D组',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                      ),
                       expands: true,
                       maxLines: null,
                     ),

@@ -41,17 +41,14 @@ class _SeasonFinalsPageState extends State<SeasonFinalsPage> {
         .map(RawPollResult.parse)
         .whereType<RawPollResult>()
         .map(CharacterPollResult.fromRaw);
-    final repechagePromoteLimit =
-        int.parse(_repechagePromoteLimitController.text);
+    final repechagePromoteLimit = int.parse(_repechagePromoteLimitController.text);
 
     if (finals.isEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('决赛投票结果无效')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('决赛投票结果无效')));
       return;
     }
     if (repechage.isEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('复活赛投票结果无效')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('复活赛投票结果无效')));
       return;
     }
 
@@ -93,7 +90,7 @@ class _SeasonFinalsPageState extends State<SeasonFinalsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('季节篇决赛'),),
+      appBar: AppBar(title: const Text('季节篇决赛')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: Form(
@@ -103,68 +100,69 @@ class _SeasonFinalsPageState extends State<SeasonFinalsPage> {
               // Left control column.
               SizedBox(
                 width: 160,
-                child: Column(
-                  children: [
-                    ...[Stage.winter, Stage.spring, Stage.summer, Stage.autumn]
-                        .map(
-                          (e) => RadioListTile(
-                        title: Text(e.name),
-                        value: e,
-                        groupValue: _stage,
-                        onChanged: (v) {
+                child: RadioGroup<Stage>(
+                  groupValue: _stage,
+                  onChanged: (v) {
+                    if (v == null) {
+                      return;
+                    }
+                    setState(() => _stage = v);
+                  },
+                  child: Column(
+                    children: [
+                      ...[Stage.winter, Stage.spring, Stage.summer, Stage.autumn].map(
+                        (e) => RadioListTile(
+                          title: Text(e.name),
+                          value: e,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        controller: _repechagePromoteLimitController,
+                        decoration: const InputDecoration(labelText: '复活赛晋级角色数'),
+                        validator: (v) {
                           if (v == null) {
-                            return;
+                            return kInvalidValue;
                           }
-                          setState(() => _stage = v);
+
+                          final vv = int.tryParse(v);
+                          if (vv == null || vv < 1) {
+                            return kInvalidValue;
+                          }
+                          return null;
                         },
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      controller: _repechagePromoteLimitController,
-                      decoration: const InputDecoration(labelText: '复活赛晋级角色数'),
-                      validator: (v) {
-                        if (v == null) {
-                          return kInvalidValue;
-                        }
-
-                        final vv = int.tryParse(v);
-                        if (vv == null || vv < 1) {
-                          return kInvalidValue;
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 32),
-                    Row(
-                      children: [
-                        const SizedBox(width: 4),
-                        Expanded(
-                          child: FilledButton(
-                            onPressed: _generateReport,
-                            child: const Text('生成战报'),
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                      ],
-                    ),
-                    const SizedBox(height: 18),
-                    Row(
-                      children: [
-                        const SizedBox(width: 4),
-                        Expanded(
-                          child: FilledButton.tonal(
-                            onPressed: () async => copyToClipboard(
-                              context,
-                              _reportController.text,
+                      const SizedBox(height: 32),
+                      Row(
+                        children: [
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: FilledButton(
+                              onPressed: _generateReport,
+                              child: const Text('生成战报'),
                             ),
-                            child: const Text('复制战报'),
                           ),
-                        ),
-                        const SizedBox(width: 4),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(width: 4),
+                        ],
+                      ),
+                      const SizedBox(height: 18),
+                      Row(
+                        children: [
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: FilledButton.tonal(
+                              onPressed: () async => copyToClipboard(
+                                context,
+                                _reportController.text,
+                              ),
+                              child: const Text('复制战报'),
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
